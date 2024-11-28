@@ -62,7 +62,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 16px;
+ 
 }
 
 .dots {
@@ -126,17 +126,4 @@ h1 {
 }
 
 
-/* Responsivní úpravy */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 4rem; 
-    }
-    .dots {
-        font-size: 1.5rem; 
-    }
-    .better {
-        font-size: 14px; 
-        padding: 8px 16px; 
-    }
-}
 </style>
