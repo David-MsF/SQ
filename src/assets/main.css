@@ -1,0 +1,7 @@
+body {
+    margin: 0;
+    /* Reset margin */
+    height: 100vh;
+    /* Výška 100% viewportu */  
+    background-color: rgb(0, 0, 0);
+}
