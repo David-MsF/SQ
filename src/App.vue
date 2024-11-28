@@ -124,6 +124,18 @@ h1 {
 .shake {
   animation: shake 0.3s ease;
 }
-
+/* Responsivní úpravy */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 4rem; 
+    }
+    .dots {
+        font-size: 1.5rem; 
+    }
+    .better {
+        font-size: 14px; 
+        padding: 8px 16px; 
+    }
+}
 
 </style>
