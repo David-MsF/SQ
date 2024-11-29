@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 
 import SekvenceSeQuick from "./components/SekvenceSeQuick.vue";
-/* //zvuk
+/* //zvuk,,
 import sound1Url from '@/assets/sounds/loop.wav';
 */
 //tečky
