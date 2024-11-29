@@ -2,9 +2,9 @@
 import { ref, onMounted } from "vue";
 
 import SekvenceSeQuick from "./components/SekvenceSeQuick.vue";
-/* //zvuk,,
+//zvuk,
 import sound1Url from '@/assets/sounds/loop.wav';
-*/
+
 //tečky
 const zobrazeniKomponenty = ref(false);
 // Počet teček 
@@ -41,7 +41,7 @@ onMounted(() => {
   setInterval(treseTlacitko, 1000); // Třesení každé 3 sekundy
 });
 
-/*
+
 
 // zvuk
 const sound1 = new Audio(sound1Url);
@@ -55,7 +55,7 @@ const setVolume = (volume) => {
   sound1.volume = volume;
 
 };
-*/
+
 
 
 </script>
@@ -69,8 +69,8 @@ const setVolume = (volume) => {
           <span v-for="(dot, index) in pocetTecek" :key="index" :class="{ 'active': jeAktivni(index) }">•</span>
         </div>
         <button class="better" :class="tridaTlacitka" >Start your day better</button>
-      <!--  <label for="volume">Nastavit hlasitost:</label>
-        <input type="range" id="volume" min="0" max="1" step="0.1" @input="setVolume($event.target.value)" /> -->
+        <label for="volume">Nastavit hlasitost:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" @input="setVolume($event.target.value)" /> 
       </div>
     </div>
 
