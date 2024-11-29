@@ -45,8 +45,17 @@ onMounted(() => {
 
 // zvuk
 const sound1 = new Audio(sound1Url);
+let zvukHraje = false;
+sound1.loop = true;
 const playSound1 = () => {
+if (!zvukHraje) {
   sound1.play();
+  zvukHraje = true;
+}else {
+  sound1.pause();
+  sound1.currentTime = 0;
+  zvukHraje = false;
+}
 };
 sound1.volume = 0.5; // nastavení 50% hlasitosti
 
@@ -68,7 +77,7 @@ const setVolume = (volume) => {
         <div class="dots">
           <span v-for="(dot, index) in pocetTecek" :key="index" :class="{ 'active': jeAktivni(index) }">•</span>
         </div>
-        <button class="better" :class="tridaTlacitka" >Start your day better</button>
+        <button class="better" :class="tridaTlacitka" @click="playSound1" >Start your day better</button>
         <label for="volume">Nastavit hlasitost:</label>
         <input type="range" id="volume" min="0" max="1" step="0.1" @input="setVolume($event.target.value)" /> 
       </div>
