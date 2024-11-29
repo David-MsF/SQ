@@ -85,11 +85,11 @@ const setVolume = (volume) => {
 
   </div>
 
-  <!--<div class="sekvencer">
+  <div class="sekvencer">
 
     <SekvenceSeQuick />
 
-  </div> -->
+  </div> 
 </template>
 
 <style scoped>
@@ -105,6 +105,7 @@ const setVolume = (volume) => {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  color: aquamarine;
  
 }
 
