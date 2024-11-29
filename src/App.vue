@@ -1,24 +1,31 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
+import SekvenceSeQuick from "./components/SekvenceSeQuick.vue";
+//zvuk
+import sound1Url from '@/assets/sounds/loop.wav';
+
+//tečky
+const zobrazeniKomponenty = ref(false);
 // Počet teček 
-const pocetTecek = ref(100); 
+const pocetTecek = ref(100);
 // Aktuální index tečky
-const aktualniIndex = ref(0); 
+const aktualniIndex = ref(0);
 // Třída pro animaci třesu tlačítka
-const tridaTlacitka = ref(''); 
+const tridaTlacitka = ref('');
 
 // Funkce pro určení, zda je tečka aktivní
 const jeAktivni = (index) => {
-  return index === aktualniIndex.value; 
+  return index === aktualniIndex.value;
 };
 
 // Funkce pro spuštění načítání teček
 const spustitNacitani = () => {
   setInterval(() => {
-    aktualniIndex.value = (aktualniIndex.value + 2) % pocetTecek.value; 
+    aktualniIndex.value = (aktualniIndex.value + 2) % pocetTecek.value;
   }, 50);
 };
+
 
 // Funkce pro třesení tlačítka
 const treseTlacitko = () => {
@@ -33,6 +40,24 @@ onMounted(() => {
   spustitNacitani(); // Spušťení načítání teček
   setInterval(treseTlacitko, 1000); // Třesení každé 3 sekundy
 });
+
+
+
+// zvuk
+const sound1 = new Audio(sound1Url);
+const playSound1 = () => {
+  sound1.play();
+};
+sound1.volume = 0.5; // nastavení 50% hlasitosti
+
+const setVolume = (volume) => {
+  // Volume by mělo být mezi 0.0 a 1.0
+  sound1.volume = volume;
+
+};
+
+
+
 </script>
 
 <template>
@@ -43,10 +68,19 @@ onMounted(() => {
         <div class="dots">
           <span v-for="(dot, index) in pocetTecek" :key="index" :class="{ 'active': jeAktivni(index) }">•</span>
         </div>
-        <button class="better" :class="tridaTlacitka">Start your day better</button>
+        <button class="better" :class="tridaTlacitka" @click="playSound1">Start your day better</button>
+        <label for="volume">Nastavit hlasitost:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" @input="setVolume($event.target.value)" />
       </div>
     </div>
+
   </div>
+
+  <!--<div class="sekvencer">
+
+    <SekvenceSeQuick />
+
+  </div> -->
 </template>
 
 <style scoped>
@@ -113,11 +147,25 @@ h1 {
 
 /* Animace třesu */
 @keyframes shake {
-  0% { transform: translate(0); }
-  25% { transform: translate(-4px, 0); }
-  50% { transform: translate(4px, 0); }
-  75% { transform: translate(-4px, 0); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+
+  25% {
+    transform: translate(-4px, 0);
+  }
+
+  50% {
+    transform: translate(4px, 0);
+  }
+
+  75% {
+    transform: translate(-4px, 0);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 
 .shake {

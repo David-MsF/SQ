@@ -5,3 +5,15 @@ body {
     /* Výška 100% viewportu */  
     background-color: rgb(0, 0, 0);
 }
+
+h2 {
+    color: antiquewhite;
+}
+
+h3 {
+    color: aqua;
+}
+
+div {
+    color: aquamarine;
+}
