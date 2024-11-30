@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { Midi } from '@tonejs/midi';
 
 import kopakSound from '@/assets/sounds/kick.wav';
 import hihatSound from '@/assets/sounds/hihat.wav';
@@ -51,11 +52,52 @@ const prepniZvuk = (zvukArray, index) => {
   zvukArray[index] = !zvukArray[index];
 };
 
+const createMidi = () => {
+  const midi = new Midi();
+  const track = midi.addTrack();
+
+  // Přidání not do MIDI podle uživatelských výběrů
+  for (let i = 0; i < 16; i++) {
+    if (kopak.value[i]) {
+      track.addNote({
+        midi: 36, // midi číslo pro kopák
+        time: i * (60 / tempo.value / 4), // čas v sekundách
+        duration: 0.5 // délka noty
+      });
+    }
+    if (snare.value[i]) {
+      track.addNote({
+        midi: 38, // midi číslo pro snare
+        time: i * (60 / tempo.value / 4),
+        duration: 0.5
+      });
+    }
+    if (hiHat.value[i]) {
+      track.addNote({
+        midi: 42, // midi číslo pro hi-hat
+        time: i * (60 / tempo.value / 4),
+        duration: 0.5
+      });
+    }
+  }
+
+  // Uložení a stažení MIDI souboru
+  const midiData = midi.toArray();
+  const blob = new Blob([midiData], { type: 'audio/midi' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'user-pattern.mid';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
 // Počet teček 
-const pocetTecek = ref(16); // Změnil jsem počet na 16, aby odpovídal logice
-// Aktuální index tečky
+const pocetTecek = ref(16);
 const aktualniIndex = ref(0);
-// Funkce pro určení, zda je tečka aktivní
 const jeAktivni = (index) => {
   return index === aktualniKrok.value;
 };
@@ -72,6 +114,7 @@ const jeAktivni = (index) => {
     <div class="controls">
       <button @click="hraj" :disabled="hraje">Přehraj</button>
       <button @click="zastav" :disabled="!hraje">Zastav</button>
+      <button @click="createMidi">Stáhnout MIDI</button> <!-- Tlačítko pro stažení MIDI -->
     </div>
     <div class="dots">
       <span v-for="(dot, index) in pocetTecek" :key="index" :class="{ 'active': jeAktivni(index) }">•</span>
@@ -110,10 +153,6 @@ const jeAktivni = (index) => {
           </div>
         </div>
       </div>
-      <hr>
-      <hr>
-      <hr>
-      <hr>
     </div>
   </div>
 </template>
@@ -173,15 +212,11 @@ button {
 
 .dots span {
   color: red;
-  /* Barva všech teček */
   opacity: 0.3;
-  /* Úroveň opacity při neaktivitě */
   transition: opacity 0.2s ease;
-  /* Plynulé přechody */
 }
 
 .dots span.active {
   opacity: 1;
-  /* Úroveň opacity, když je tečka aktivní */
 }
 </style>
